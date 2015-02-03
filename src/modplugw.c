@@ -3,7 +3,7 @@
  * authors:
  *     Lubomir I. Ivanov, 2014 and later
  *
- * this source file is released in public domain without warranty of any kind
+ * this source file is released in the public domain without warranty of any kind
  */
 
 #include <stdio.h>
