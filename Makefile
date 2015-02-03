@@ -38,7 +38,7 @@ $(OBJ_DYN): $(SRC)
 	$(CC) $(CFLAGS) -DMODPLUGW_DYNAMIC $(INCLUDES) $(SRC) -o $(OBJ_DYN)
 
 clean:
-	rm -f $(OBJ) $(OBJ_DYN) $(LIBFILE) $(LIBFILE_DYN)
+	rm -f $(OBJ) $(OBJ_DYN) $(LIBFILE) $(LIBFILE_DYN) $(DLLFILE)
 
 install:
 	echo 'make install' not implemented!
