@@ -5,7 +5,7 @@ a MOD file via 'segments'.
 
 this is not a fork of libmodplug, but a complimentary library.
 
-for libmodplugw to be useful the MOD file first has to be decoded in memory and
+for libmodplugw to be useful the MOD file first has to be decoded in memory.
 it supports all formats that libmodplug can decode.
 
 public domain license. see LICENSE.
@@ -13,7 +13,10 @@ public domain license. see LICENSE.
 * API:
   look at ./include/modplugw.h
 
-* EXAMPLES:
+* EXAMPLE:
+
+here is an example of how to extract some patterns from a MOD file and create
+OpenAL buffers from the resulted 'segments':
 
 1) decode a file buffer:
 	modplugw_desc_t *desc = modplugw_decode(file_buf, file_buf_sz, NULL, 1);
@@ -35,7 +38,7 @@ public domain license. see LICENSE.
 	// get where the last pattern ends
 	unsgined int mod_end = modplugw_get_end_pattern_offset(desc);
 
-3) obtain the first and third pattern as segments:
+3) obtain the first and third patterns as segments:
 	modplugw_seg_t *seg[2]; // two segment pointers
 	seg[0] = modplugw_alloc_pattern_segment(desc, 0, 1); // 1st to 2nd
 	seg[1] = modplugw_alloc_pattern_segment(desc, 2, 3); // 3rd to 4th
@@ -48,15 +51,19 @@ public domain license. see LICENSE.
 5) create a segment from rows and add that to the second segment:
 	// start row - 4th pattern, 0eth row
 	// end row - 6th pattern, 0eth row
+	// this will result in a 2-pattern long segment 
 	modplugw_seg_t *tmp2 = modplugw_alloc_row_segment(desc, 4, 0, 6, 0);
 	seg[1] = modplugw_append_segments(seg[1], &tmp2, 1); // append '1' segment (tmp2)
-	modplugw_free_segments(tmp2, 1); // free 1 (tmp) segment
+	modplugw_free_segments(tmp2, 1); // free 1 (tmp2) segment
 
 6) create OpenAL buffers from the two segments and free them:
 	ALuint buffers[2];
 	alBufferData(buffers[0], format, seg[0]->data, seg[0]->len, frequency);
 	alBufferData(buffers[1], format, seg[1]->data, seg[1]->len, frequency);
 	modplugw_free_segments(seg, 2);
+
+7) dispose of the descriptor:
+	modplugw_free_desc(desc);
 
 * BUILDING:
    - gcc, ar and pkg-config are required.
