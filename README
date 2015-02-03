@@ -73,8 +73,10 @@ OpenAL buffers from the resulted 'segments':
 * BUILDING
 
 notes:
-- gcc, make, ar and pkg-config are required.
-- call 'make'
+- 'make' and 'ar' are required for a gcc/mingw build
+- if you don't have pkg-config modify INCLUDES and LIBS accordingly
+- msvc is not supported by the Makefile, but you can modify it accordingly
+- call 'make' in the root path
 - both a static link library and a dynamic link library will be created in ./lib
 
 it's probably best to static link libmodplugw to your project
