@@ -1,6 +1,7 @@
-* ABOUT:
+* ABOUT
+
 libmodplugw is a wrapper for libmodplug that enables MOD file row and pattern
-sample accrurate operations. can be used for looping buffers and remixing
+sample accurate operations. can be used for looping buffers and remixing
 a MOD file via 'segments'.
 
 this is not a fork of libmodplug, but a complimentary library.
@@ -10,10 +11,13 @@ it supports all formats that libmodplug can decode.
 
 public domain license. see LICENSE.
 
-* API:
-  look at ./include/modplugw.h
+================================================================================
+* API
 
-* EXAMPLE:
+look at ./include/modplugw.h
+
+================================================================================
+* EXAMPLE
 
 here is an example of how to extract some patterns from a MOD file and create
 OpenAL buffers from the resulted 'segments':
@@ -31,11 +35,11 @@ OpenAL buffers from the resulted 'segments':
 	float seconds = modplugw_bytes_to_sec(desc, desc->len);
 	// start position of the 2nd pattern in bytes
 	unsigned int pos2 = modplugw_get_pattern_offset(desc, 1);
-	// how many rows there are in the first pattern
+	// how many rows there are in the second pattern
 	unsigned int rows2 = modplugw_get_pattern_rows(desc, 1);
 	// get length of the second pattern in bytes
 	unsigned int len2 = modplugw_get_pattern_len(desc, 1);
-	// get where the last pattern ends
+	// get where the last pattern ends (end_pattern = last_pattern + 1);
 	unsgined int mod_end = modplugw_get_end_pattern_offset(desc);
 
 3) obtain the first and third patterns as segments:
@@ -48,10 +52,10 @@ OpenAL buffers from the resulted 'segments':
 	seg[0] = modplugw_append_segments(seg[0], &tmp, 1); // append '1' segment (tmp)
 	modplugw_free_segments(tmp, 1); // free 1 (tmp) segment
 
-5) create a segment from rows and add that to the second segment:
+5) create a segment from a row span and add that to the second segment:
 	// start row - 4th pattern, 0eth row
 	// end row - 6th pattern, 0eth row
-	// this will result in a 2-pattern long segment 
+	// this will result in a 2-pattern long segment
 	modplugw_seg_t *tmp2 = modplugw_alloc_row_segment(desc, 4, 0, 6, 0);
 	seg[1] = modplugw_append_segments(seg[1], &tmp2, 1); // append '1' segment (tmp2)
 	modplugw_free_segments(tmp2, 1); // free 1 (tmp2) segment
@@ -65,22 +69,28 @@ OpenAL buffers from the resulted 'segments':
 7) dispose of the descriptor:
 	modplugw_free_desc(desc);
 
-* BUILDING:
-   - gcc, ar and pkg-config are required.
-   - call 'make'
-   - both a static link library and a dynamic link library will be created
+================================================================================
+* BUILDING
+
+notes:
+- gcc, make, ar and pkg-config are required.
+- call 'make'
+- both a static link library and a dynamic link library will be created in ./lib
 
 it's probably best to static link libmodplugw to your project
 
-* INSTALL:
+================================================================================
+* INSTALLING
+
 'make install' is not implemented.
 
 just copy:
-    - ./lib/* to where libmodplug's libs are
-    - ./include/* to where libmodplug's includes are
+- ./lib/* to where libmodplug's libs are
+- ./include/* to where libmodplug's includes are
 
-for pkg-config usage find the libmodplug.pc file, copy it to libmodplugw.pc and
-modify the file.
+for pkg-config usage find the libmodplug.pc file, make a copy of it named
+libmodplugw.pc and modify the file.
 
-* AUTHOR:
- 	lubomir i. ivanov (neolit123 [at] gmail.com)
+================================================================================
+* AUTHOR
+	lubomir i. ivanov (neolit123 [at] gmail.com)
