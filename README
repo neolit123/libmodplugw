@@ -6,7 +6,7 @@ a MOD file via 'segments'.
 
 this is not a fork of libmodplug, but a complimentary library.
 
-for libmodplugw to be useful the MOD file first has to be decoded in memory.
+for libmodplugw to work a MOD file first has to be decoded in memory first.
 it supports all formats that libmodplug can decode.
 
 public domain license. see LICENSE.
