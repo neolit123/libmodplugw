@@ -19,7 +19,6 @@ ifeq ($(OS),Windows_NT)
     DLLFILE = ./lib/$(LIBNAME).dll
 else
     DLLFILE = ./lib/$(LIBNAME).so
-    
 endif
 LIBFILE_DYN = $(DLLFILE).a
 
