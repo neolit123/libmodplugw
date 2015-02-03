@@ -40,4 +40,4 @@ clean:
 	rm -f $(OBJ) $(OBJ_DYN) $(LIBFILE) $(LIBFILE_DYN) $(DLLFILE)
 
 install:
-	echo 'make install' not implemented!
+	@echo 'make install' not implemented!
