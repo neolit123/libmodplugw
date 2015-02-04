@@ -10,6 +10,7 @@ INCLUDES += $(shell pkg-config --cflags libmodplug)
 LIBS = $(shell pkg-config --libs libmodplug)
 
 SRC = ./src/modplugw.c
+HEADERS = ./include/modplugw.h
 OBJ = ./obj/modplugw.o
 OBJ_DYN = ./obj/modplugw.dyn.o
 LIBNAME = libmodplugw
@@ -30,10 +31,10 @@ $(LIBFILE): $(OBJ)
 $(LIBFILE_DYN): $(OBJ_DYN)
 	$(CC) -shared $(OBJ_DYN) -o $(DLLFILE) $(LIBS) -Wl,--out-implib,$(LIBFILE_DYN)
 
-$(OBJ): $(SRC)
+$(OBJ): $(SRC) $(HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRC) -o $(OBJ)
 
-$(OBJ_DYN): $(SRC)
+$(OBJ_DYN): $(SRC) $(HEADERS)
 	$(CC) $(CFLAGS) -DMODPLUGW_DYNAMIC $(INCLUDES) $(SRC) -o $(OBJ_DYN)
 
 clean:
