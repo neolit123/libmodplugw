@@ -11,16 +11,16 @@
 #ifndef MODPLUGW_H
 #define MODPLUGW_H
 
-#define MODPLUGW_VERSION "0.1.1"
-#define MODPLUGW_VERSION_MAJOR 0
-#define MODPLUGW_VERSION_MINOR 1
-#define MODPLUGW_VERSION_PATCH 1
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include <modplug.h>
+
+#define MODPLUGW_VERSION "0.1.1"
+#define MODPLUGW_VERSION_MAJOR 0
+#define MODPLUGW_VERSION_MINOR 1
+#define MODPLUGW_VERSION_PATCH 1
 
 #ifdef MODPLUGW_DYNAMIC
 #	define MODPLUGW_EXPORT __declspec(dllexport)
