@@ -70,6 +70,15 @@ MODPLUGW_EXPORT
 char *
 modplugw_get_end_pattern_offset(modplugw_desc_t *desc);
 
+// retrieve the byte offset of a row
+MODPLUGW_EXPORT
+char *
+modplugw_get_row_offset(
+	modplugw_desc_t *desc,
+	const unsigned int pattern,
+	const unsigned int row
+);
+
 // get the length in bytes between two patterns
 MODPLUGW_EXPORT
 unsigned int

@@ -42,6 +42,23 @@ modplugw_get_end_pattern_offset(modplugw_desc_t *desc)
 	return modplugw_get_pattern_offset(desc, desc->npatterns);
 }
 
+char *
+modplugw_get_row_offset(
+	modplugw_desc_t *desc,
+	const unsigned int pattern,
+	const unsigned int row)
+{
+	if (!desc)
+		return NULL;
+	if (pattern > desc->npatterns)
+		return NULL;
+	if (row > desc->nrows[pattern] - 1)
+		return NULL;
+	char *offset = &desc->data[desc->pattern[pattern]];
+	offset += row * desc->row_len;
+	return offset;
+}
+
 unsigned int
 modplugw_get_len_between_patterns(
 	modplugw_desc_t *desc,
