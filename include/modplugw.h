@@ -37,6 +37,9 @@ typedef struct {
 
 	unsigned int allocated; // 1 if the descriptor contains allocated data
 
+	unsigned int settings_allocated;
+	ModPlug_Settings *settings;
+
 	unsigned int *nrows; // each element holds rows per pattern. containts npatterns + 1. last one is 0 rows.
 	unsigned int row_len; // the length of a single row in bytes
 

@@ -103,6 +103,8 @@ modplugw_free_desc(modplugw_desc_t *desc)
 		ModPlug_Unload(desc->mod);
 	free(desc->pattern);
 	free(desc->data);
+	if (desc->settings_allocated)
+		free(desc->settings);
 	memset(desc, 0, sizeof(modplugw_desc_t));
 	free(desc);
 }
@@ -126,18 +128,20 @@ modplugw_decode(
 	desc->allocated = 1;
 
 	// some predefined settings
+	desc->settings_allocated = 0;
 	if (!settings) {
-		ModPlug_Settings modSettings;
-		ModPlug_GetSettings(&modSettings);
-		modSettings.mFlags |= MODPLUG_ENABLE_OVERSAMPLING;
-		modSettings.mStereoSeparation = 256;
-		modSettings.mLoopCount = 0;
-		modSettings.mChannels = 2;
-		modSettings.mBits = 16;
-		modSettings.mFrequency = 44100;
-		modSettings.mResamplingMode = MODPLUG_RESAMPLE_LINEAR;
-		settings = &modSettings;
+		desc->settings_allocated = 1;
+		settings = (ModPlug_Settings *)malloc(sizeof(ModPlug_Settings));
+		ModPlug_GetSettings(settings);
+		settings->mFlags = MODPLUG_ENABLE_OVERSAMPLING;
+		settings->mStereoSeparation = 256;
+		settings->mLoopCount = 0;
+		settings->mChannels = 2;
+		settings->mBits = 16;
+		settings->mFrequency = 44100;
+		settings->mResamplingMode = MODPLUG_RESAMPLE_SPLINE;
 	}
+	desc->settings = settings;
 
 	// set settings, load mod, and set volume
 	ModPlug_SetSettings(settings);
