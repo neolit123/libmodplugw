@@ -1,2 +1,6 @@
+* v0.1.2 - 05.02.2015
+- fix a potential ModPlug_SetSettings issue
+- use spline interpolation
+
 * v0.1.1 - 04.02.2015
 - initial release
