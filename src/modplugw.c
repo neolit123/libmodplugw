@@ -324,6 +324,8 @@ modplugw_append_segments(
 		dest = (modplugw_seg_t *)malloc(sizeof(modplugw_seg_t));
 		memset(dest, 0, sizeof(modplugw_seg_t));
 		dest->id = MODPLUGW_DEF_SEGMENT_ID;
+	} else {
+		len += dest->len;
 	}
 	dest->data = (char *)realloc(dest->data, len);
 
