@@ -81,6 +81,7 @@ notes:
 - if you don't have pkg-config modify INCLUDES and LIBS accordingly
 - msvc is not supported by the Makefile, but you can modify it accordingly
 - call 'make' in the root path
+- call 'make DEBUG=1' to build the libraries with debug symbols
 - both a static link library and a dynamic link library will be created in ./lib
 
 it's probably best to static link libmodplugw to your project
