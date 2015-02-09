@@ -1,3 +1,6 @@
+* v0.2.1 - 09.02.2015
+- support the 'volume' field in the descriptor (MODPLUGW_DEF_VOLUME by default)
+
 * v0.2.0 - 09.02.2015
 - add modplugw_alloc_desc() which separates the descriptor allocation and
 buffer decode from modplugw_decode().

@@ -17,10 +17,10 @@ extern "C" {
 
 #include <modplug.h>
 
-#define MODPLUGW_VERSION "0.2.0"
+#define MODPLUGW_VERSION "0.2.1"
 #define MODPLUGW_VERSION_MAJOR 0
 #define MODPLUGW_VERSION_MINOR 2
-#define MODPLUGW_VERSION_PATCH 0
+#define MODPLUGW_VERSION_PATCH 1
 
 #ifdef MODPLUGW_DYNAMIC
 #	define MODPLUGW_EXPORT __declspec(dllexport)
