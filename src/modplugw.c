@@ -279,8 +279,11 @@ modplugw_alloc_pattern_segment(
 	if (!seg)
 		return NULL;
 
-	seg->data = modplugw_get_pattern_offset(desc, start_pat);
+	char *start = modplugw_get_pattern_offset(desc, start_pat);
 	seg->len = modplugw_get_len_between_patterns(desc, start_pat, end_pat);
+
+	seg->data = (char *)malloc(seg->len);
+	memcpy(seg->data, start, seg->len);
 
 	seg->id = MODPLUGW_DEF_SEGMENT_ID;
 	return seg;
@@ -307,11 +310,13 @@ modplugw_alloc_row_segment(
 
 	char *start = modplugw_get_pattern_offset(desc, start_pat);
 	start += start_row * desc->row_len;
-	seg->data = start;
 
 	char *end = modplugw_get_pattern_offset(desc, end_pat);
 	end += end_row * desc->row_len;
 	seg->len = end - start;
+
+	seg->data = (char *)malloc(seg->len);
+	memcpy(seg->data, start, seg->len);
 
 	seg->id = MODPLUGW_DEF_SEGMENT_ID;
 	return seg;
@@ -364,6 +369,10 @@ modplugw_free_segments(
 		return;
 	int i = 0;
 	while (i < count) {
+		if (seg[i]) {
+			free(seg[i]->data);
+			memset(seg[i], 0, sizeof(modplugw_seg_t));
+		}
 		free(seg[i]);
 		i++;
 	}
