@@ -94,32 +94,9 @@ modplugw_get_pattern_rows(
 	return desc->nrows[start_pat];
 }
 
-void
-modplugw_free_desc(modplugw_desc_t *desc)
-{
-	if (!desc || !desc->allocated)
-		return;
-	if (desc->mod)
-		ModPlug_Unload(desc->mod);
-	free(desc->pattern);
-	free(desc->data);
-	if (desc->settings_allocated)
-		free(desc->settings);
-	memset(desc, 0, sizeof(modplugw_desc_t));
-	free(desc);
-}
-
 modplugw_desc_t *
-modplugw_decode(
-	const char *buf,
-	const unsigned int len,
-	ModPlug_Settings *settings,
-	int verbose
-)
+modplugw_alloc_desc(ModPlug_Settings *settings)
 {
-	if (!buf || !len)
-		return NULL;
-
 	// allocate memory for the descriptor
 	modplugw_desc_t *desc = (modplugw_desc_t *)malloc(sizeof(modplugw_desc_t));
 	if (!desc)
@@ -143,20 +120,49 @@ modplugw_decode(
 	}
 	desc->settings = settings;
 
+	return desc;
+}
+
+void
+modplugw_free_desc(modplugw_desc_t *desc)
+{
+	if (!desc || !desc->allocated)
+		return;
+	if (desc->mod)
+		ModPlug_Unload(desc->mod);
+	free(desc->pattern);
+	free(desc->data);
+	if (desc->settings_allocated)
+		free(desc->settings);
+	memset(desc, 0, sizeof(modplugw_desc_t));
+	free(desc);
+}
+
+modplugw_desc_t *
+modplugw_decode(
+	modplugw_desc_t *desc,
+	const char *buf,
+	const unsigned int len,
+	int verbose
+)
+{
+	if (!buf || !len || !desc || !desc->allocated)
+		return NULL;
+
 	// set settings, load mod, and set volume
-	ModPlug_SetSettings(settings);
+	ModPlug_SetSettings(desc->settings);
 	ModPlugFile *mod = ModPlug_Load(buf, len);
 	ModPlug_SetMasterVolume(mod, 196);
 	desc->mod = mod;
 
 	// set sample size and read buffer properties
-	const unsigned int sample_size = settings->mChannels * (settings->mBits / 8);
+	const unsigned int sample_size = desc->settings->mChannels * (desc->settings->mBits / 8);
 	const unsigned int alloc_increment = 1 << 22; // ~4 megs
-	unsigned int buf_size = settings->mFrequency * sample_size * (unsigned int)(ModPlug_GetLength(mod) * 0.001f);
+	unsigned int buf_size = desc->settings->mFrequency * sample_size * (unsigned int)(ModPlug_GetLength(mod) * 0.001f);
 
 	// sample
 	desc->sample_size = sample_size;
-	desc->sample_rate = settings->mFrequency;
+	desc->sample_rate = desc->settings->mFrequency;
 	char s[sample_size];
 
 	// allocate memory for the patterns, the 'pattern' field contains one extra pattern for the end bytes

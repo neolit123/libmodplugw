@@ -109,6 +109,11 @@ modplugw_get_pattern_rows(
 	const unsigned int start_pat
 );
 
+// allocate a descriptor and a settings object if needed
+MODPLUGW_EXPORT
+modplugw_desc_t *
+modplugw_alloc_desc(ModPlug_Settings *settings);
+
 // free the descriptor and allocated memory
 MODPLUGW_EXPORT
 void
@@ -118,9 +123,9 @@ modplugw_free_desc(modplugw_desc_t *desc);
 MODPLUGW_EXPORT
 modplugw_desc_t *
 modplugw_decode(
+	modplugw_desc_t *desc,
 	const char *buf,
 	const unsigned int len,
-	ModPlug_Settings *settings,
 	int verbose
 );
 
