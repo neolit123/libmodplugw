@@ -104,6 +104,9 @@ modplugw_alloc_desc(ModPlug_Settings *settings)
 	memset(desc, 0, sizeof(modplugw_desc_t));
 	desc->allocated = 1;
 
+	// set default volume
+	desc->volume = MODPLUGW_DEF_VOLUME;
+
 	// some predefined settings
 	desc->settings_allocated = 0;
 	if (!settings) {
@@ -152,7 +155,9 @@ modplugw_decode(
 	// set settings, load mod, and set volume
 	ModPlug_SetSettings(desc->settings);
 	ModPlugFile *mod = ModPlug_Load(buf, len);
-	ModPlug_SetMasterVolume(mod, 196);
+	ModPlug_SetMasterVolume(mod, desc->volume);
+	if (desc->mod)
+		ModPlug_Unload(desc->mod);
 	desc->mod = mod;
 
 	// set sample size and read buffer properties

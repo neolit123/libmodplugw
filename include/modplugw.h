@@ -28,7 +28,8 @@ extern "C" {
 #	define MODPLUGW_EXPORT
 #endif
 
-#define MODPLUGW_DEF_SEGMENT_ID -1
+#define MODPLUGW_DEF_SEGMENT_ID   -1
+#define MODPLUGW_DEF_VOLUME       196
 
 // a descriptor structure to be used by the extension when decoding
 typedef struct {
@@ -39,6 +40,8 @@ typedef struct {
 
 	unsigned int settings_allocated;
 	ModPlug_Settings *settings;
+
+	unsigned int volume; // the volume at which modplug will decode
 
 	unsigned int *nrows; // each element holds rows per pattern. containts npatterns + 1. last one is 0 rows.
 	unsigned int row_len; // the length of a single row in bytes
