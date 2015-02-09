@@ -133,6 +133,7 @@ modplugw_free_desc(modplugw_desc_t *desc)
 		return;
 	if (desc->mod)
 		ModPlug_Unload(desc->mod);
+	free(desc->nrows);
 	free(desc->pattern);
 	free(desc->data);
 	if (desc->settings_allocated)
@@ -158,6 +159,9 @@ modplugw_decode(
 	ModPlug_SetMasterVolume(mod, desc->volume);
 	if (desc->mod)
 		ModPlug_Unload(desc->mod);
+	free(desc->pattern);
+	free(desc->nrows);
+	free(desc->data);
 	desc->mod = mod;
 
 	// set sample size and read buffer properties
