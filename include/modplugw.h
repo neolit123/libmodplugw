@@ -38,8 +38,8 @@ typedef struct {
 
 	unsigned int allocated; // 1 if the descriptor contains allocated data
 
-	unsigned int settings_allocated;
-	ModPlug_Settings *settings;
+	unsigned int settings_allocated; // if 1 calling modplugw_free_desc() will free() the 'settings' pointer
+	ModPlug_Settings *settings; // a setting pointer which can be either allocated by the user or by modplugw
 
 	unsigned int volume; // the volume at which modplug will decode
 
