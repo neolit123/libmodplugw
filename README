@@ -22,10 +22,14 @@ look at ./include/modplugw.h
 here is an example of how to extract some patterns from a MOD file and create
 OpenAL buffers from the resulted 'segments':
 
+0) allocate the library descriptor:
+	modplugw_desc_t *desc = modplugw_alloc_desc(NULL);
+	// 'desc' will hold all pattern and row information of the MOD file
+	// instead of NULL you can pass a ModPlug_Settings pointer
+	// said pointer will be available via 'desc->settings'
+
 1) decode a file buffer:
-	modplugw_desc_t *desc = modplugw_decode(file_buf, file_buf_sz, NULL, 1);
-	// 'desc' now holds all pattern and row information of the MOD file
-	// the 3rd argument can be used to pass ModPlug_Settings
+	modplugw_decode(desc, file_buf, file_buf_sz, 1);
 	// you can pass 0 as the last argument to disable verbose mode
 	// desc->mod is a (ModPlugFile *)
 	// desc->bytes and desc->len hold the entire decoded buffer
