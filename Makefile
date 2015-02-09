@@ -1,9 +1,14 @@
+MAKEFILE = Makefile
 CC = gcc
 CFLAGS = -c -Wall -O1
-LDFLAGS =  
+LDFLAGS =
 
 AR = ar
 ARFLAGS = rvs
+
+ifeq ($(DEBUG), 1)
+   CFLAGS += -g
+endif
 
 INCLUDES = -I./include
 INCLUDES += $(shell pkg-config --cflags libmodplug)
@@ -31,10 +36,10 @@ $(LIBFILE): $(OBJ)
 $(LIBFILE_DYN): $(OBJ_DYN)
 	$(CC) -shared $(OBJ_DYN) -o $(DLLFILE) $(LIBS) -Wl,--out-implib,$(LIBFILE_DYN)
 
-$(OBJ): $(SRC) $(HEADERS)
+$(OBJ): $(SRC) $(HEADERS) $(MAKEFILE)
 	$(CC) $(CFLAGS) $(INCLUDES) $(SRC) -o $(OBJ)
 
-$(OBJ_DYN): $(SRC) $(HEADERS)
+$(OBJ_DYN): $(SRC) $(HEADERS) $(MAKEFILE)
 	$(CC) $(CFLAGS) -DMODPLUGW_DYNAMIC $(INCLUDES) $(SRC) -o $(OBJ_DYN)
 
 clean:
